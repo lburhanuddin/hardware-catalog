@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sams Plus Hardware Catalog & Price List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f6f8fb',
+              100: '#edf1f7',
+              700: '#1b3152',
+              800: '#12233c',
+              900: '#0c1728'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['Cinzel', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; }
+      .print-shadow { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+      .pdf-page { page-break-after: always; break-after: page; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+      .bg-slate-800 { background-color: #f8fafc !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
+      .text-white { color: #0f172a !important; }
+      .text-slate-100 { color: #0f172a !important; }
+      .text-slate-200 { color: #1e293b !important; }
+      .text-slate-300 { color: #334155 !important; }
+      .text-slate-400 { color: #475569 !important; }
+      .text-amber-400 { color: #d97706 !important; }
+      th { background-color: #f1f5f9 !important; color: #0f172a !important; }
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #0c1728; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen selection:bg-amber-500 selection:text-slate-950">
+
+  <!-- Header & Navigation -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-900/95 border-b border-slate-800 shadow-xl no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-lg sm:text-xl font-display">
+          SP
+        </div>
+        <div>
+          <h1 class="font-display text-base sm:text-2xl font-bold tracking-wider text-white">SAMS PLUS</h1>
+          <p class="text-[10px] sm:text-xs text-amber-400 font-medium tracking-widest uppercase">Hardware Catalog & Price List</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-1.5 sm:space-x-2.5">
+        <!-- Sync Photos Button -->
+        <label class="cursor-pointer bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl border border-slate-700 flex items-center space-x-1.5 text-xs sm:text-sm font-semibold transition shadow-sm" title="Sync Original Handle Photos">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          <span class="hidden sm:inline">Sync Photos</span>
+          <span class="sm:hidden">Sync</span>
+          <input type="file" id="headerPhotoInput" multiple accept="image/*" class="hidden" onchange="handleHeaderPhotoSync(event)">
+        </label>
+
+        <!-- Bake Photos into Standalone HTML -->
+        <button onclick="bakeAndExportHTML()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center space-x-1.5 transition shadow-md" title="Download standalone HTML with photos">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+          <span class="hidden md:inline">Bake Photos</span>
+        </button>
+
+        <!-- Download PDF Button (4 Per Page) -->
+        <button onclick="downloadPDFCatalog()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center space-x-1.5 transition shadow-md" title="Generate 4-Per-Page PDF Document">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span id="pdfBtnText" class="hidden sm:inline">Download PDF (4/Page)</span>
+          <span class="sm:hidden">PDF</span>
+        </button>
+
+        <!-- Print -->
+        <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 p-2 sm:p-2.5 rounded-xl border border-slate-700 transition" title="Print Catalog">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="catalogMainContainer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    
+    <!-- Storage & Backup Status Banner -->
+    <div id="storageStatusBanner" class="mb-6 p-4 rounded-2xl bg-slate-800/80 border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-4 no-print shadow-lg">
+      <div class="flex items-center space-x-3 w-full md:w-auto">
+        <div id="statusIndicator" class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></div>
+        <div>
+          <p id="statusText" class="text-xs sm:text-sm font-bold text-white">Dual Storage Persistence Active (IndexedDB + Local)</p>
+          <p class="text-[11px] sm:text-xs text-slate-400">Photos remain preserved across sessions, previews, and refreshes.</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2.5 w-full md:w-auto justify-end">
+        <button onclick="exportJSONBackup()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span>Save Backup (.json)</span>
+        </button>
+        <label class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition">
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+          <span>Restore Backup</span>
+          <input type="file" accept=".json" class="hidden" onchange="importJSONBackup(event)">
+        </label>
+      </div>
+    </div>
+
+    <!-- Dashboard Metrics Bar -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4 mb-6 sm:mb-8 no-print">
+      <div class="bg-slate-800/50 border border-slate-700/80 rounded-2xl p-4 sm:p-5 shadow-lg backdrop-blur-sm">
+        <p class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Models</p>
+        <p id="metricTotalModels" class="text-2xl sm:text-3xl font-extrabold text-white mt-1 font-display">132</p>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-700/80 rounded-2xl p-4 sm:p-5 shadow-lg backdrop-blur-sm">
+        <p class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Stock Inventory</p>
+        <p id="metricTotalStock" class="text-2xl sm:text-3xl font-extrabold text-amber-400 mt-1 font-display">20,794</p>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-700/80 rounded-2xl p-4 sm:p-5 shadow-lg backdrop-blur-sm">
+        <p class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Photos Synced</p>
+        <p id="metricPhotosSynced" class="text-2xl sm:text-3xl font-extrabold text-emerald-400 mt-1 font-display">0 / 132</p>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-700/80 rounded-2xl p-4 sm:p-5 shadow-lg backdrop-blur-sm">
+        <p class="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Price Range</p>
+        <p class="text-xl sm:text-2xl font-extrabold text-blue-400 mt-1 font-display">₹58 - ₹1,926</p>
+      </div>
+    </div>
+
+    <!-- Controls: Search & Series Filters -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 sm:mb-8 no-print">
+      <div class="w-full md:w-96 relative">
+        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </span>
+        <input type="text" id="searchInput" oninput="filterCatalog()" placeholder="Search handles & knobs by code, finish, size, or ID..." class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-500 text-xs sm:text-sm shadow-inner transition">
+      </div>
+      
+      <!-- Series Quick-Filter Pills -->
+      <div id="seriesFilters" class="w-full md:w-auto flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0 custom-scrollbar">
+        <button onclick="filterBySeries('ALL')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition whitespace-nowrap shadow-sm">All Series</button>
+        <button onclick="filterBySeries('Door Handle')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">Door Handles</button>
+        <button onclick="filterBySeries('WM-5080')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">WM-5080 Inlay</button>
+        <button onclick="filterBySeries('WM-6028')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">WM-6028 Contour</button>
+        <button onclick="filterBySeries('Knobs')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">Knobs</button>
+        <button onclick="filterBySeries('ALU Concealed')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">Concealed Profiles</button>
+        <button onclick="filterBySeries('ALU')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">ALU Profiles</button>
+        <button onclick="filterBySeries('STL')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">STL Series</button>
+        <button onclick="filterBySeries('SP-Series')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">SP Inlay Series</button>
+        <button onclick="filterBySeries('WM-Marsal')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">Marsal Series</button>
+        <button onclick="filterBySeries('Rajwadi')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">Rajwadi</button>
+        <button onclick="filterBySeries('WM-387')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">WM-387</button>
+        <button onclick="filterBySeries('WM-906')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">WM-906</button>
+        <button onclick="filterBySeries('H-176')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">H-176</button>
+        <button onclick="filterBySeries('WM-2098')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">WM-2098 Wave</button>
+        <button onclick="filterBySeries('WM-360')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">WM-360 Arch</button>
+        <button onclick="filterBySeries('WM-Vista')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">Vista Series</button>
+        <button onclick="filterBySeries('Yamaha')" class="series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700">Yamaha</button>
+      </div>
+    </div>
+
+    <!-- Product Grid Container -->
+    <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Dynamically populated via JavaScript -->
+    </div>
+  </main>
+
+  <!-- Photo Matcher Modal Dialog -->
+  <div id="photoMatcherModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 no-print">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl p-6 flex flex-col max-h-[90vh]">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div>
+          <h3 class="text-base font-bold text-white">Assign Photo to Product</h3>
+          <p id="matcherProgressText" class="text-xs text-amber-400 mt-0.5 truncate max-w-xs sm:max-w-md">Assign photo to matching model</p>
+        </div>
+        <button onclick="closeMatcherModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="my-4 flex flex-col items-center">
+        <div class="w-full h-56 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center p-2 mb-4">
+          <img id="matcherImagePreview" src="" alt="Pending Photo" class="max-w-full max-h-full object-contain rounded-lg">
+        </div>
+
+        <label for="matcherProductSelect" class="block w-full text-xs font-semibold text-slate-300 mb-1.5">
+          Select Target Product:
+        </label>
+        <select id="matcherProductSelect" class="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-100 focus:outline-none focus:border-amber-500 transition">
+          <!-- Populated dynamically -->
+        </select>
+      </div>
+
+      <div class="flex items-center justify-end space-x-2 pt-3 border-t border-slate-800">
+        <button onclick="skipCurrentPhoto()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition">
+          Skip This Photo
+        </button>
+        <button onclick="confirmPhotoMatch()" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-xs font-bold transition shadow-md">
+          Link to Product
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Complete Master Product Dataset (132 Models)
+    const baseProducts = [
+      // Architectural Door Handles, Inlays, & Profiles
+      { id: '1001063028', code: 'STL.DOOR.HADL. D.MATT', finish: 'Solid Square-Section Door Pull with Round Flanges Matt Brushed', series: 'Door Handle', items: [{size: '6"', qty: 12, mrp: 526}, {size: '10"', qty: 6, mrp: 626}] },
+      { id: '1001063047', code: 'STL.DOOR.HNDL. C.MATT', finish: 'Curved Broad-Face Arch Door Pull with Round Flanges Matt Brushed', series: 'Door Handle', items: [{size: '8"', qty: 8, mrp: 576}, {size: '10"', qty: 16, mrp: 626}] },
+      { id: '1001063080', code: 'WM HNDL.A073.CPTT', finish: 'Aerodynamic Flared Taper Pull Handle Chrome Two-Tone', series: 'ALU', items: [{size: '8"', qty: 233, mrp: 216}] },
+      { id: '1001063124', code: 'W/M 5080 WENGI', finish: 'Wenge Wood Inlay with Central Chrome Slit Pull Handle', series: 'WM-5080', items: [{size: '4"', qty: 12, mrp: 166}] },
+      { id: '1001063136', code: 'W/M 5080 GOLD', finish: 'Golden Teak Woodgrain Inlay with Central Chrome Slit Pull Handle', series: 'WM-5080', items: [{size: '6"', qty: 15, mrp: 232}, {size: '10"', qty: 19, mrp: 364}] },
+      { id: '1001063223', code: 'STL.DHR.10MM.MATT', finish: 'Solid Stainless Steel D Half-Round Pull Handle Matt Brushed', series: 'STL', items: [{size: '6"', qty: 105, mrp: 144}, {size: '8"', qty: 89, mrp: 198}, {size: '10"', qty: 20, mrp: 240}, {size: '12"', qty: 101, mrp: 288}, {size: '18"', qty: 98, mrp: 594}] },
+      { id: '1001063276', code: 'WM.HNDL.6028.CP', finish: 'Extended Organic Wave Contour Pull Handle Mirror Chrome', series: 'WM-6028', items: [{size: '10"', qty: 40, mrp: 330}] },
+      { id: '1001063280', code: 'WM.HNDL.6028.MATT', finish: 'Extended Organic Wave Contour Pull Handle Matt Brushed', series: 'WM-6028', items: [{size: '10"', qty: 61, mrp: 330}] },
+
+      // S-Marsal Distinct Model & SP-62 Silver
+      { id: '1001062425', code: 'WM.S.MARSAL.CPTT', finish: 'S-Curved Two-Tone Chrome Marsal Pull Handle', series: 'WM-Marsal', items: [{size: '8"', qty: 98, mrp: 184}] },
+      { id: '1001062486', code: 'W/M SP-62 SILVER', finish: 'Satin Silver Inlay Bowed Architectural Handle', series: 'SP-Series', items: [{size: '10"', qty: 30, mrp: 612}] },
+
+      // Dome Knobs (Open MRP)
+      { id: '1001062238', code: 'W/M DOOM KNOB RG', finish: 'Rose Gold Metallic Dome Concave Cabinet Knob', series: 'Knobs', items: [{size: 'Standard', qty: 52, mrp: '-'}] },
+      { id: '1001062246', code: 'W/M DOOM KNOB GOLD', finish: 'Gloss Gold Reflective Metallic Dome Cabinet Knob', series: 'Knobs', items: [{size: 'Standard', qty: 48, mrp: '-'}] },
+
+      // Verified Knobs & Edge Profiles (Separate Collince & 2-Line)
+      { id: '1001062130', code: 'W/M KNOB COLLINE B/A', finish: 'Antique Brass Dual-Slot Architectural Cabinet Knob', series: 'Knobs', items: [{size: 'Standard', qty: 152, mrp: 156}] },
+      { id: '1001062152', code: 'W/M KNOB COLLINCE C.P', finish: 'Mirror Chrome Dual-Slot Architectural Cabinet Knob', series: 'Knobs', items: [{size: 'Standard', qty: 99, mrp: 156}] },
+      { id: '1001062161', code: 'W/M KNOB COLLINCE SS', finish: 'Stainless Steel Satin Matt Dual-Slot Cabinet Knob', series: 'Knobs', items: [{size: 'Standard', qty: 14, mrp: 156}] },
+      { id: '1001062059', code: 'STL.KNOB.MATT', finish: 'Stainless Steel Matt Lip Profile Cabinet Edge Knob', series: 'Knobs', items: [{size: '1X2', qty: 45, mrp: 210}, {size: '1X3', qty: 9, mrp: 276}, {size: '1X4', qty: 44, mrp: '-'}] },
+
+      // Verified Pull Handles & Knobs
+      { id: '1001062279', code: 'W/M DUCK KNOB SILVER', finish: 'Silver Sculpted Donald Duck Children / Decorative Knob', series: 'Knobs', items: [{size: 'Standard', qty: 224, mrp: 60}] },
+      { id: '1001062291', code: 'ALU.KNOB.708.DEER', finish: 'Antique Brass Regal Running Deer Crest Round Knob', series: 'Knobs', items: [{size: 'Standard', qty: 35, mrp: 195}] },
+      { id: '1001062383', code: 'WM.CAMEL.CP', finish: 'Mirror Chrome Dual-Pillar Camel Contour Pull Handle', series: 'ALU', items: [{size: '4"', qty: 209, mrp: 154}, {size: '6"', qty: 163, mrp: 188}, {size: '8"', qty: 124, mrp: 254}, {size: '10"', qty: 51, mrp: 440}] },
+      { id: '1001062392', code: 'WM.TITANIC.CP', finish: 'Mirror Chrome Streamlined Angular Titanic Pull Handle', series: 'ALU', items: [{size: '4"', qty: 121, mrp: 138}, {size: '6"', qty: 80, mrp: 194}, {size: '10"', qty: 25, mrp: 440}] },
+      { id: '1001062411', code: 'W/M BOT C.P', finish: 'Mirror Chrome Aerodynamic Curved Boat Profile Pull Handle', series: 'ALU', items: [{size: '4"', qty: 200, mrp: 150}, {size: '8"', qty: 120, mrp: 304}, {size: '10"', qty: 53, mrp: 468}] },
+      { id: '1001062461', code: 'SP.CROMA.WENGI', finish: 'Wenge Wood Inlay Chrome Plated Geometric Profile Handle', series: 'SP-Series', items: [{size: '4"', qty: 150, mrp: 216}, {size: '8"', qty: 48, mrp: 386}] },
+      { id: '1001062472', code: 'SP-62 W/N MATT', finish: 'Walnut Dark Wood Inlay Matt Silver Bowed Architectural Handle', series: 'SP-Series', items: [{size: '4"', qty: 91, mrp: 254}, {size: '8"', qty: 20, mrp: 414}, {size: '10"', qty: 30, mrp: 612}] },
+
+      // Verified Knobs & Thumb Knobs
+      { id: '1001061972', code: 'WM-KNOB-116-WENGI', finish: 'Square Chrome Frame with Wenge Woodgrain Inlay Knob', series: 'Knobs', items: [{size: 'Standard', qty: 41, mrp: 156}] },
+      { id: '1001062001', code: 'W/M KNOB NO 116 WHITE', finish: 'Square Chrome Frame with Pure White Enamel Inlay Knob', series: 'Knobs', items: [{size: 'Standard', qty: 62, mrp: 156}] },
+      { id: '1001062019', code: 'W/M KNOB A.TO.Z SILVER', finish: 'Curved Rectangular Chrome with Silver Geometric Relief Knob', series: 'Knobs', items: [{size: 'Standard', qty: 10, mrp: 198}] },
+      { id: '1001062024', code: 'WM-A.TO.Z-KONB WENGI', finish: 'Curved Rectangular Chrome with Wenge Woodgrain Relief Knob', series: 'Knobs', items: [{size: 'Standard', qty: 24, mrp: 198}] },
+      { id: '1001062067', code: 'STL.THUMB.KNOB.MATT', finish: 'Solid Stainless Steel Cylindrical Knob with Ergonomic Thumb Scoop Matt', series: 'STL', items: [{size: '19X19', qty: 168, mrp: 116}, {size: '25X25', qty: 20, mrp: 153}] },
+
+      // Designer Knobs & Specialized Profiles
+      { id: '1001061694', code: 'W/M KNOB LION A/B', finish: 'Antique Brass 3D Sculpted Full Mane Lion Head Architectural Knob', series: 'Knobs', items: [{size: 'Standard', qty: 47, mrp: 234}] },
+      { id: '1001061711', code: 'L KNOB 2 LINE SS MATT', finish: 'Stainless Steel Matt Square 2-Line Cutout Edge Knob', series: 'Knobs', items: [{size: 'Standard', qty: 17, mrp: 172}] },
+      { id: '1001061720', code: 'L KNOB 2 LINE A/B', finish: 'Antique Brass Square 2-Line Cutout Edge Knob', series: 'Knobs', items: [{size: 'Standard', qty: 29, mrp: 172}] },
+      { id: '1001061733', code: 'W/M KNOB NO 3004 CP.SIL', finish: 'Chrome Plated with Satin Silver Inlay Rectangular Cabinet Knob', series: 'Knobs', items: [{size: 'Standard', qty: 20, mrp: 312}] },
+      { id: '1001061810', code: 'W/M KNOB NO 750 W MOP', finish: 'Mirror Chrome Square Knob with White Mother of Pearl Inlay', series: 'Knobs', items: [{size: 'Standard', qty: 50, mrp: 204}] },
+      { id: '1001061814', code: 'W/M KNOB NO 750 B MOP', finish: 'Mirror Chrome Square Knob with Brown Mother of Pearl Inlay', series: 'Knobs', items: [{size: 'Standard', qty: 69, mrp: 136}] },
+      { id: '1001061817', code: 'W/M KNOB NO 747 MATT', finish: 'Beveled Chrome Frame with Matt Silver Inlay Rectangular Knob', series: 'Knobs', items: [{size: 'Standard', qty: 18, mrp: 162}] },
+      { id: '1001061849', code: 'VATKI KNOB BIG RG', finish: 'Rose Gold PVD Concave Round Bowl (Vatki) Designer Knob', series: 'Knobs', items: [{size: 'Standard', qty: 23, mrp: 150}] },
+      { id: '1001061919', code: 'W/M KNOB NO 111 SILVER', finish: 'Round Chrome Rim with Brushed Silver Center Knob', series: 'Knobs', items: [{size: 'Standard', qty: 21, mrp: 132}] },
+      { id: '1001061929', code: 'W/M KNOB NO 11 WHITE', finish: 'Round Chrome Rim with Gloss Pure White Enamel Inlay Knob', series: 'Knobs', items: [{size: 'Standard', qty: 14, mrp: 132}] },
+
+      // Concealed Cup Pulls, K-49 Profiles & Copper Antique Lion Knob
+      { id: '1001060573', code: 'ALU-1WAY-CONSIL SIL', finish: 'Anodized Silver 1-Way Concealed Cup Pull with Chrome Edge', series: 'ALU Concealed', items: [{size: '6"', qty: 71, mrp: 220}, {size: '10"', qty: 40, mrp: 336}, {size: '12"', qty: 49, mrp: 414}] },
+      { id: '1001060599', code: 'ALU-1WAY-CONSIL SSMAT', finish: 'Stainless Steel Matt Brushed 1-Way Concealed Cup Pull with Chrome Flanges', series: 'ALU Concealed', items: [{size: '4"', qty: 16, mrp: 182}, {size: '6"', qty: 11, mrp: 232}, {size: '10"', qty: 40, mrp: 414}] },
+      { id: '1001060651', code: 'ALU-1WAY-CONSIL WENGI', finish: 'Wenge Black Wood Texture 1-Way Concealed Cup Pull with Mirror Chrome Flanges', series: 'ALU Concealed', items: [{size: '4"', qty: 191, mrp: 182}, {size: '6"', qty: 3, mrp: 220}, {size: '8"', qty: 6, mrp: 260}, {size: '10"', qty: 55, mrp: 336}, {size: '12"', qty: 61, mrp: 414}] },
+      { id: '1001060923', code: 'ALU 2 WAY CONSIL C.P', finish: 'Mirror Chrome 2-Way Flush Concealed Profile Pull', series: 'ALU Concealed', items: [{size: '4"', qty: 265, mrp: 242}] },
+      { id: '1001060958', code: 'ALU 2 WAY CONSIL SILVER', finish: 'Satin Silver 2-Way Concealed Flush Pull with Mirror Chrome End Caps', series: 'ALU Concealed', items: [{size: '6"', qty: 44, mrp: 232}, {size: '10"', qty: 9, mrp: 330}, {size: '12"', qty: 57, mrp: 380}] },
+      { id: '1001061004', code: 'ALU-2WAY-CONSIL SSMAT', finish: 'Stainless Steel Matt Brushed 2-Way Concealed Profile with Chrome End Caps', series: 'ALU Concealed', items: [{size: '4"', qty: 242, mrp: 182}, {size: '6"', qty: 48, mrp: 232}, {size: '8"', qty: 68, mrp: 282}, {size: '12"', qty: 8, mrp: 380}] },
+      { id: '1001061025', code: 'ALU 2 WAY CONSIL W/N', finish: 'Walnut / Wenge Matte Black 2-Way Concealed Profile with Chrome End Caps', series: 'ALU Concealed', items: [{size: '8"', qty: 9, mrp: 282}, {size: '10"', qty: 56, mrp: 330}] },
+      { id: '1001061138', code: 'ALU 2 WAY CNSL K-49 C.P', finish: 'Mirror Chrome K-49 Rectangular Flush Concealed Recessed Handle', series: 'ALU Concealed', items: [{size: '8"', qty: 12, mrp: 594}, {size: '12"', qty: 43, mrp: 940}] },
+      { id: '1001061153', code: 'ALU 2 WAY CNSL K-49 S.S', finish: 'Satin Stainless Steel K-49 Deep Rectangular Flush Recessed Handle', series: 'ALU Concealed', items: [{size: '4"', qty: 112, mrp: 396}, {size: '8"', qty: 26, mrp: 594}, {size: '10"', qty: 60, mrp: 792}] },
+      { id: '1001061685', code: 'W/M KNOB LION C/ANTIC', finish: 'Copper Antique 3D Sculpted Full Mane Lion Head Architectural Knob', series: 'Knobs', items: [{size: 'Standard', qty: 62, mrp: 234}] },
+
+      // Knobs & Concealed Profile
+      { id: '1001059547', code: 'ALU KNOB 703-SCORPIO', finish: 'Antique Brass Royal Scorpio Emblem Round Knob', series: 'Knobs', items: [{size: 'Standard', qty: 96, mrp: 252}] },
+      { id: '1001059550', code: 'ALU KNOB 701 LION', finish: 'Antique Brass Winter Coming Stark Lion Crest Knob', series: 'Knobs', items: [{size: 'Standard', qty: 95, mrp: 252}] },
+      { id: '1001059560', code: 'ALU KNOB 710 EAGLE', finish: 'Antique Brass Regal Eagle Crest Round Knob', series: 'Knobs', items: [{size: 'Standard', qty: 27, mrp: 252}] },
+      { id: '1001059587', code: 'ALU KNOB 714 DIL', finish: 'Antique Brass Textured Heart (Dil) Designer Knob', series: 'Knobs', items: [{size: 'Standard', qty: 44, mrp: 252}] },
+      { id: '1001059596', code: 'ALU KNOB FLOWER', finish: 'Antique Brass Floral Petal Decorative Knob', series: 'Knobs', items: [{size: 'Standard', qty: 58, mrp: 252}] },
+      { id: '1001059601', code: 'ALU EX-20-KNOB', finish: 'Mirror Chrome Rectangular Recessed Slot Edge Knob', series: 'Knobs', items: [{size: 'Standard', qty: 49, mrp: 280}] },
+      { id: '1001059624', code: 'ALU KNOB EX-21', finish: 'Mirror Chrome Semi-Oval Contour Edge Pull Knob', series: 'Knobs', items: [{size: 'Standard', qty: 52, mrp: 280}] },
+      { id: '1001059628', code: 'ALU EX-22 C.P', finish: 'Mirror Chrome Contoured Edge Pull Knob', series: 'Knobs', items: [{size: 'Standard', qty: 46, mrp: 280}] },
+      { id: '1001059634', code: 'ALI KNOB D7 32MM', finish: 'Mirror Chrome 32mm Angled Cabinet Knob', series: 'Knobs', items: [{size: '32 MM', qty: 22, mrp: 154}] },
+      { id: '1001060379', code: 'ALU-1WAY-CONSIL CP', finish: 'Mirror Chrome 1-Way Concealed Cup Pull', series: 'ALU Concealed', items: [{size: '4"', qty: 73, mrp: 242}, {size: '6"', qty: 65, mrp: 298}, {size: '8"', qty: 151, mrp: 352}, {size: '10"', qty: 83, mrp: 462}] },
+
+      // Architectural Pulls & Handles
+      { id: '1001058955', code: 'STL D 10MM MATT', finish: 'Stainless Steel D-Shape Matt Brushed', series: 'STL', items: [{size: '4"', qty: 767, mrp: 72}, {size: '6"', qty: 385, mrp: 116}, {size: '8"', qty: 130, mrp: 154}] },
+      { id: '1001059004', code: 'STL S GLASS DOOR HNDL MATT', finish: 'S-Curved Architectural Glass Door Pull Matt', series: 'STL', items: [{size: '12"', qty: 3, mrp: 1470}] },
+      { id: '1001059103', code: 'STL C 10MM MATT', finish: 'Curved Solid Stainless Steel Matt Brushed', series: 'STL', items: [{size: '3"', qty: 144, mrp: 58}, {size: '4"', qty: 350, mrp: 82}, {size: '6"', qty: 150, mrp: 116}, {size: '8"', qty: 239, mrp: 154}, {size: '10"', qty: 43, mrp: 194}] },
+      { id: '1001059209', code: 'W/M D/H FOSTER CPTT', finish: 'Foster Wave Main Door Pull Chrome Two-Tone', series: 'Door Handle', items: [{size: '8"', qty: 33, mrp: 720}, {size: '12"', qty: 8, mrp: 960}] },
+      { id: '1001059258', code: 'W/M D/H K6 1008 S/S', finish: 'K6 1008 Stainless Steel Architectural Door Pull', series: 'Door Handle', items: [{size: '12"', qty: 12, mrp: 1925}] },
+      { id: '1001059264', code: 'W/M D/H K6 1008 WHITE', finish: 'K6 1008 White Inlay Chrome Door Pull', series: 'Door Handle', items: [{size: '12"', qty: 2, mrp: 1925}] },
+      { id: '1001059272', code: 'W/M D/H K6 1008 WENGI', finish: 'K6 1008 Wenge Wood Inlay Chrome Door Pull', series: 'Door Handle', items: [{size: '12"', qty: 1, mrp: 1926}] },
+      { id: '1001059526', code: 'W/M RAJWADI B/A', finish: 'Antique Brass Rajwadi Royal Carved Handle', series: 'Rajwadi', items: [{size: '6"', qty: 91, mrp: 324}, {size: '8"', qty: 80, mrp: 370}] },
+      { id: '1001058605', code: 'STL-C10MM-DOT', finish: 'Curved Stainless Steel with Dot Pattern', series: 'STL', items: [{size: '4"', qty: 443, mrp: 88}, {size: '6"', qty: 237, mrp: 132}, {size: '8"', qty: 23, mrp: 176}] },
+      { id: '1001055486', code: 'WM-387-W/N', finish: 'Mosaic Walnut Brown Inlay & Chrome Contour', series: 'WM-387', items: [{size: '96 MM', qty: 48, mrp: 314}, {size: '160 MM', qty: 194, mrp: 518}, {size: '224 MM', qty: 38, mrp: 785}] },
+      { id: '1001055483', code: 'WM-387-WHITE', finish: 'Mosaic White Textured Inlay & Chrome', series: 'WM-387', items: [{size: '96 MM', qty: 54, mrp: 314}, {size: '160 MM', qty: 42, mrp: 518}, {size: '224 MM', qty: 24, mrp: 786}] },
+
+      // Base Master Catalog
+      { id: '1001056938', code: 'STL-D10MM+DOT', finish: 'Stainless Steel Gloss / Chrome with Dot Pattern', series: 'STL', items: [{size: '3"', qty: 60, mrp: 60}, {size: '4"', qty: 441, mrp: 80}, {size: '6"', qty: 329, mrp: 132}, {size: '8"', qty: 281, mrp: 176}] },
+      { id: '1001056877', code: 'C10MM-T.T', finish: 'Curved Two-Tone Polish', series: 'STL', items: [{size: '3"', qty: 76, mrp: 120}, {size: '4"', qty: 451, mrp: 84}, {size: '6"', qty: 212, mrp: 124}, {size: '8"', qty: 37, mrp: 166}] },
+      { id: '1001056809', code: 'STL-906-SATIN/SS', finish: 'Satin / Stainless Steel Architectural Profile', series: 'WM-906', items: [{size: '4"', qty: 9, mrp: 286}, {size: '6"', qty: 71, mrp: 330}, {size: '8"', qty: 12, mrp: 374}, {size: '10"', qty: 13, mrp: 430}, {size: '12"', qty: 60, mrp: 584}] },
+      { id: '1001056801', code: 'STL-906-R.GOLD', finish: 'Rose Gold PVD Mirror Finish', series: 'WM-906', items: [{size: '4"', qty: 24, mrp: 286}, {size: '6"', qty: 96, mrp: 336}, {size: '8"', qty: 93, mrp: 374}, {size: '10"', qty: 58, mrp: 438}, {size: '12"', qty: 60, mrp: 594}] },
+      { id: '1001056795', code: 'STL-906-A/B', finish: 'Antique Brass Hand-Finished', series: 'WM-906', items: [{size: '4"', qty: 64, mrp: 286}, {size: '8"', qty: 20, mrp: 374}, {size: '10"', qty: 20, mrp: 430}] },
+      { id: '1001056791', code: 'STL-906-BLACK', finish: 'Matt Jet Black Architectural Finish', series: 'WM-906', items: [{size: '6"', qty: 102, mrp: 336}, {size: '8"', qty: 44, mrp: 374}, {size: '12"', qty: 46, mrp: 594}] },
+      { id: '1001056754', code: 'H 176 STEEL HANDLE MATT', finish: 'Faceted Prism Matt Brushed', series: 'H-176', items: [{size: '4"', qty: 26, mrp: 248}, {size: '8"', qty: 20, mrp: 380}, {size: '10"', qty: 40, mrp: 512}, {size: '12"', qty: 40, mrp: 644}] },
+      { id: '1001056751', code: 'H 176 STEEL HANDLE G/BLACK', finish: 'Gunmetal / Black Two-Tone Faceted', series: 'H-176', items: [{size: '10"', qty: 20, mrp: 546}, {size: '12"', qty: 20, mrp: 688}] },
+      { id: '1001056748', code: 'H 176 STEEL HANDLE A/B', finish: 'Antique Brass Faceted Prism', series: 'H-176', items: [{size: '4"', qty: 61, mrp: 260}, {size: '8"', qty: 83, mrp: 402}, {size: '10"', qty: 43, mrp: 546}, {size: '12"', qty: 40, mrp: 588}] },
+      { id: '1001056691', code: 'STL-H175-COCACOLA', finish: 'Twisted Ribbon Rose Gold PVD', series: 'STL', items: [{size: '224 MM', qty: 40, mrp: 600}, {size: '288 MM', qty: 20, mrp: 754}] },
+      { id: '1001056679', code: 'STL-175-G/B', finish: 'Twisted Gunmetal / Black Ribbon', series: 'STL', items: [{size: '160 MM', qty: 39, mrp: 446}, {size: '224 MM', qty: 41, mrp: 600}] },
+      { id: '1001056672', code: 'STL-H175-A/B', finish: 'Twisted Antique Brass Ribbon', series: 'STL', items: [{size: '96 MM', qty: 88, mrp: 292}, {size: '160 MM', qty: 60, mrp: 446}, {size: '224 MM', qty: 61, mrp: 754}, {size: '288 MM', qty: 42, mrp: 672}] },
+      { id: '1001056660', code: 'STL-H175-MATT', finish: 'Twisted Matt Brushed Architectural', series: 'STL', items: [{size: '96 MM', qty: 51, mrp: 276}, {size: '224 MM', qty: 39, mrp: 540}, {size: '288 MM', qty: 40, mrp: 672}] },
+      { id: '1001056515', code: 'ALU-D11-CP', finish: 'Winged Profile Mirror Chrome', series: 'ALU', items: [{size: '150 MM', qty: 16, mrp: 370}, {size: '300 MM', qty: 15, mrp: 694}] },
+      { id: '1001056508', code: 'ALU-D11-MATT', finish: 'Winged Profile Matt Silver', series: 'ALU', items: [{size: '150 MM', qty: 26, mrp: 370}, {size: '200 MM', qty: 73, mrp: 436}, {size: '300 MM', qty: 13, mrp: 694}, {size: '400 MM', qty: 59, mrp: 726}] },
+      { id: '1001056500', code: 'ALU-D10-CP', finish: 'Continuous Scoop Lip Chrome', series: 'ALU', items: [{size: '300 MM', qty: 46, mrp: 694}, {size: '400 MM', qty: 28, mrp: 726}] },
+      { id: '1001056485', code: 'ALU-D10-MATT', finish: 'Continuous Scoop Lip Matt Silver', series: 'ALU', items: [{size: '150 MM', qty: 17, mrp: 304}, {size: '400 MM', qty: 36, mrp: 726}] },
+      { id: '1001056380', code: 'WM-2098-PVD.GOLD.A/B', finish: 'Luxury Wave PVD Gold & AB', series: 'WM-2098', items: [{size: '96 MM', qty: 43, mrp: 644}, {size: '160 MM', qty: 105, mrp: 1094}, {size: '224 MM', qty: 56, mrp: 1560}, {size: '288 MM', qty: 16, mrp: 1838}] },
+      { id: '1001056362', code: 'WM-2098-WINE.TT', finish: 'Luxury Wave Wine Two-Tone', series: 'WM-2098', items: [{size: '96 MM', qty: 48, mrp: 400}, {size: '160 MM', qty: 82, mrp: 920}, {size: '224 MM', qty: 28, mrp: 1184}, {size: '288 MM', qty: 22, mrp: 1596}] },
+      { id: '1001056339', code: 'WM-2098-G/BLACK', finish: 'Luxury Wave Gunmetal / Black', series: 'WM-2098', items: [{size: '96 MM', qty: 29, mrp: 400}, {size: '160 MM', qty: 52, mrp: 936}, {size: '224 MM', qty: 12, mrp: 1290}, {size: '288 MM', qty: 10, mrp: 1620}] },
+      { id: '1001056332', code: 'WM-2098-CPMATT', finish: 'Luxury Wave Chrome & Matt Two-Tone', series: 'WM-2098', items: [{size: '160 MM', qty: 78, mrp: 784}, {size: '224 MM', qty: 51, mrp: 1062}, {size: '288 MM', qty: 20, mrp: 1386}] },
+      { id: '1001056265', code: 'WM-360-MARIGOLD BLACK', finish: 'Arch Bow Marigold & Jet Black', series: 'WM-360', items: [{size: '160 MM', qty: 84, mrp: 936}, {size: '224 MM', qty: 42, mrp: 1294}, {size: '288 MM', qty: 20, mrp: 1458}] },
+      { id: '1001056238', code: 'WM-360-R/G WENGI', finish: 'Arch Bow Rose Gold & Wenge Wood', series: 'WM-360', items: [{size: '96 MM', qty: 31, mrp: 490}, {size: '160 MM', qty: 74, mrp: 936}, {size: '224 MM', qty: 24, mrp: 1294}, {size: '288 MM', qty: 20, mrp: 1458}] },
+      { id: '1001056231', code: 'WM-360-WINE.TT', finish: 'Arch Bow Wine Two-Tone', series: 'WM-360', items: [{size: '96 MM', qty: 92, mrp: 628}, {size: '160 MM', qty: 22, mrp: 1090}] },
+      { id: '1001056208', code: 'WM-360-SATIN', finish: 'Arch Bow Satin Brushed Steel', series: 'WM-360', items: [{size: '96 MM', qty: 98, mrp: 496}, {size: '160 MM', qty: 97, mrp: 826}, {size: '224 MM', qty: 36, mrp: 1140}, {size: '288 MM', qty: 10, mrp: 1452}] },
+      { id: '1001056174', code: 'WM-730-BLACK', finish: 'Aerodynamic Contour Matt Black', series: 'WM-730', items: [{size: '8"', qty: 318, mrp: 462}, {size: '10"', qty: 83, mrp: 628}] },
+      { id: '1001056164', code: 'WM-730-R/G', finish: 'Aerodynamic Contour Rose Gold', series: 'WM-730', items: [{size: '4"', qty: 36, mrp: 220}, {size: '10"', qty: 3, mrp: 628}] },
+      { id: '1001055619', code: 'WM-5094-SIL', finish: 'Center Groove Silver Trim', series: 'WM-5094', items: [{size: '96 MM', qty: 32, mrp: 210}, {size: '128 MM', qty: 67, mrp: 262}, {size: '160 MM', qty: 40, mrp: 342}] },
+      { id: '1001055616', code: 'WM-5094-WHITE', finish: 'Center Groove Pure White Enamel', series: 'WM-5094', items: [{size: '128 MM', qty: 11, mrp: 262}, {size: '160 MM', qty: 87, mrp: 342}] },
+      { id: '1001055613', code: 'WM-6026-MATT', finish: 'Streamlined Arch Matt Brushed', series: 'WM-6026', items: [{size: '96 MM', qty: 30, mrp: 210}, {size: '160 MM', qty: 114, mrp: 282}, {size: '224 MM', qty: 48, mrp: 446}] },
+      { id: '1001055610', code: 'WM-6026-CP', finish: 'Streamlined Arch Mirror Chrome', series: 'WM-6026', items: [{size: '160 MM', qty: 59, mrp: 282}, {size: '244 MM', qty: 14, mrp: 446}] },
+      { id: '1001055605', code: 'WM-5087-BLACK', finish: 'Sleek Crescent Matt Black', series: 'WM-5087', items: [{size: '96 MM', qty: 120, mrp: 180}, {size: '128 MM', qty: 20, mrp: 292}, {size: '8"', qty: 40, mrp: 342}] },
+      { id: '1001055537', code: 'WM-5075-WHITE', finish: 'Inlay Gloss White & Chrome', series: 'WM-5075', items: [{size: '6"', qty: 57, mrp: 224}] },
+      { id: '1001055530', code: 'WM-5075-WENGI', finish: 'Inlay Wenge Wood & Chrome', series: 'WM-5075', items: [{size: '6"', qty: 178, mrp: 224}, {size: '8"', qty: 135, mrp: 242}] },
+      { id: '1001055526', code: 'WM-5075-RED', finish: 'Inlay Gloss Red & Chrome', series: 'WM-5075', items: [{size: '6"', qty: 107, mrp: 224}] },
+      { id: '1001055492', code: 'WM-387-SIL', finish: 'Mosaic Silver Crystal Inlay', series: 'WM-387', items: [{size: '160 MM', qty: 15, mrp: 518}] },
+      { id: '1001055464', code: 'WM-381-GOLD', finish: 'Torpedo PVD Gold Polish', series: 'WM-381', items: [{size: '224 MM', qty: 4, mrp: 616}] },
+      { id: '1001055461', code: 'WM-381-CP', finish: 'Torpedo Mirror Chrome Plated', series: 'WM-381', items: [{size: '160 MM', qty: 13, mrp: 440}, {size: '224 MM', qty: 6, mrp: 616}] },
+      { id: '1001055454', code: 'WM-314-SIL', finish: 'Sparkle Textured Silver Shell', series: 'WM-314', items: [{size: '96 MM', qty: 45, mrp: 216}, {size: '160 MM', qty: 25, mrp: 374}] },
+      { id: '1001055448', code: 'WM-307-BROWN', finish: 'Sparkling Bronze Quartz Inlay', series: 'WM-307', items: [{size: '160 MM', qty: 12, mrp: 462}] },
+      { id: '1001055445', code: 'WM-307-WHITE', finish: 'White Enamel Inlay & Chrome', series: 'WM-307', items: [{size: '96 MM', qty: 57, mrp: 270}, {size: '160 MM', qty: 37, mrp: 462}, {size: '224 MM', qty: 53, mrp: 666}] },
+      { id: '1001055428', code: 'WM-1024-BLACK', finish: 'Filigree Arch Matt Black', series: 'WM-1024', items: [{size: '96 MM', qty: 57, mrp: 282}, {size: '160 MM', qty: 25, mrp: 440}, {size: '224 MM', qty: 43, mrp: 616}, {size: '288 MM', qty: 47, mrp: 822}] },
+      { id: '1001055420', code: 'WM-1024-A/B', finish: 'Filigree Arch Antique Brass', series: 'WM-1024', items: [{size: '96 MM', qty: 121, mrp: 282}, {size: '160 MM', qty: 100, mrp: 440}, {size: '224 MM', qty: 80, mrp: 616}, {size: '288 MM', qty: 100, mrp: 822}] },
+      { id: '1001055404', code: 'WM-CONCIL-1023A/B', finish: 'Concealed Cup Pull Antique Brass', series: 'WM-1023', items: [{size: '96 MM', qty: 24, mrp: 246}, {size: '160 MM', qty: 1, mrp: 610}, {size: '224 MM', qty: 11, mrp: 770}] },
+      { id: '1001055400', code: 'WM-CONCIL-1023-BLACK', finish: 'Concealed Cup Pull Matt Black', series: 'WM-1023', items: [{size: '96 MM', qty: 20, mrp: 426}, {size: '224 MM', qty: 14, mrp: 770}] },
+      { id: '1001055359', code: 'STL-NEW-VISTA-BLACK', finish: 'Vista Crest Bar Matt Black', series: 'WM-Vista', items: [{size: '4"', qty: 41, mrp: 330}, {size: '6"', qty: 20, mrp: 422}, {size: '8"', qty: 29, mrp: 510}, {size: '10"', qty: 29, mrp: 600}, {size: '12"', qty: 26, mrp: 690}] },
+      { id: '1001055356', code: 'STL-NEW-VISTA-R/G', finish: 'Vista Crest Bar Rose Gold', series: 'WM-Vista', items: [{size: '4"', qty: 50, mrp: 450}, {size: '6"', qty: 79, mrp: 618}, {size: '8"', qty: 15, mrp: 786}, {size: '10"', qty: 30, mrp: 954}, {size: '12"', qty: 15, mrp: 1122}] },
+      { id: '1001055351', code: 'STL-NEW-VISTA-A/B', finish: 'Vista Crest Bar Antique Brass', series: 'WM-Vista', items: [{size: '4"', qty: 115, mrp: 330}, {size: '6"', qty: 100, mrp: 422}, {size: '8"', qty: 45, mrp: 510}, {size: '10"', qty: 28, mrp: 600}, {size: '12"', qty: 30, mrp: 690}] },
+      { id: '1001055341', code: 'STL-NEW-VISTA-SATIN', finish: 'Vista Crest Bar Satin Steel', series: 'WM-Vista', items: [{size: '4"', qty: 125, mrp: 360}, {size: '6"', qty: 60, mrp: 422}, {size: '8"', qty: 44, mrp: 564}, {size: '10"', qty: 30, mrp: 666}, {size: '12"', qty: 30, mrp: 768}] },
+      { id: '1001055097', code: 'WM-NEW-MARSAL-CPTT', finish: 'Marsal Bow Chrome Two-Tone', series: 'WM-Marsal', items: [{size: '96 MM', qty: 13, mrp: 88}, {size: '128 MM', qty: 279, mrp: 128}, {size: '160 MM', qty: 89, mrp: 166}] },
+      { id: '1001055068', code: 'WM-YAMAHA-MATT', finish: 'Yamaha Contour Matt Brushed', series: 'Yamaha', items: [{size: '96 MM', qty: 359, mrp: 370}, {size: '160 MM', qty: 159, mrp: 402}, {size: '224 MM', qty: 39, mrp: 842}, {size: '288 MM', qty: 69, mrp: 1096}] },
+      { id: '1001055065', code: 'WM-YAMAHA-CPTT', finish: 'Yamaha Contour Chrome Two-Tone', series: 'Yamaha', items: [{size: '96 MM', qty: 89, mrp: 304}] },
+      { id: '1001055055', code: 'WM-HR-CPTT', finish: 'Heavy Round Chrome Two-Tone', series: 'WM-HR', items: [{size: '160 MM', qty: 153, mrp: 318}, {size: '224 MM', qty: 106, mrp: 510}] },
+      { id: '1001055028', code: 'WM-H203-MATT', finish: 'H203 Ergonomic Curve Matt', series: 'WM-H203', items: [{size: '96 MM', qty: 12, mrp: 220}, {size: '128 MM', qty: 53, mrp: 272}, {size: '160 MM', qty: 140, mrp: 354}] },
+      { id: '1001055005', code: 'WM-H203-CP', finish: 'H203 Ergonomic Curve Chrome', series: 'WM-H203', items: [{size: '96 MM', qty: 11, mrp: 220}, {size: '128 MM', qty: 43, mrp: 272}, {size: '160 MM', qty: 12, mrp: 354}] },
+      { id: '1001054985', code: 'WM-H204-MATT', finish: 'H204 Sleek Arch Matt', series: 'WM-H204', items: [{size: '96 MM', qty: 62, mrp: 198}] },
+      { id: '1001054971', code: 'WM-H204-CP', finish: 'H204 Sleek Arch Chrome', series: 'WM-H204', items: [{size: '96 MM', qty: 113, mrp: 198}, {size: '128 MM', qty: 11, mrp: 268}, {size: '160 MM', qty: 52, mrp: 284}] },
+      { id: '1001054948', code: 'WM-H117-CPTT', finish: 'H117 Profile Chrome Two-Tone', series: 'WM-H117', items: [{size: '160 MM', qty: 40, mrp: 218}] },
+      { id: '1001054939', code: 'WM-H117-MATT', finish: 'H117 Profile Matt Brushed', series: 'WM-H117', items: [{size: '120 MM', qty: 25, mrp: 172}] },
+      { id: '1001054932', code: 'WM-H118-CPTT', finish: 'H118 Detailed Contour Chrome', series: 'WM-H118', items: [{size: '128 MM', qty: 10, mrp: 204}, {size: '160 MM', qty: 29, mrp: 308}] },
+      { id: '1001054928', code: 'WM-GOLDEN-CP', finish: 'Golden Wing Contour Chrome', series: 'WM-Golden', items: [{size: '96 MM', qty: 56, mrp: 140}, {size: '128 MM', qty: 40, mrp: 176}, {size: '224 MM', qty: 20, mrp: 386}] },
+      { id: '1001054401', code: 'ARROW', finish: 'Arrowhead Streamline Chrome', series: 'Arrow', items: [{size: '128 MM', qty: 81, mrp: 226}, {size: '160 MM', qty: 30, mrp: 330}] },
+      { id: '1001054404', code: 'DURA-CPTT', finish: 'Dura Heavy Duty Chrome Two-Tone', series: 'Dura', items: [{size: '3"', qty: 106, mrp: 100}] }
+    ];
+
+    let products = JSON.parse(JSON.stringify(baseProducts));
+    let photoMap = {};
+    let currentSeries = 'ALL';
+    let pendingPhotosQueue = [];
+
+    // Global Cloud Synchronization Engine
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'sams-plus-catalog';
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    let isCloudActive = false;
+
+    // Dual-Layer Storage Engine (IndexedDB + LocalStorage)
+    const DB_NAME = 'SamsPlusHardwareDB_v6';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'catalog_photos';
+
+    function showToast(message) {
+      let toast = document.getElementById('catalogToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'catalogToast';
+        toast.className = 'fixed bottom-5 right-5 z-50 bg-amber-500 text-slate-950 font-bold px-4 py-3 rounded-2xl shadow-2xl transition-all duration-300 text-xs sm:text-sm flex items-center space-x-2 border border-amber-300';
+        document.body.appendChild(toast);
+      }
+      toast.innerText = message;
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        if (toast) toast.style.display = 'none';
+      }, 3500);
+    }
+
+    function openPhotoDB() {
+      return new Promise((resolve, reject) => {
+        if (!window.indexedDB) {
+          reject(new Error("IndexedDB not supported"));
+          return;
+        }
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = (e) => {
+          const idb = e.target.result;
+          if (!idb.objectStoreNames.contains(STORE_NAME)) {
+            idb.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+        req.onsuccess = (e) => resolve(e.target.result);
+        req.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function savePhotoToIDB(id, dataUrl) {
+      try {
+        const idb = await openPhotoDB();
+        const tx = idb.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        store.put({ id: String(id), data: dataUrl, updatedAt: Date.now() });
+      } catch (e) {
+        console.warn("IndexedDB save note:", e);
+      }
+    }
+
+    async function loadAllPhotosFromIDB() {
+      try {
+        const idb = await openPhotoDB();
+        return new Promise((resolve) => {
+          const tx = idb.transaction(STORE_NAME, 'readonly');
+          const store = tx.objectStore(STORE_NAME);
+          const req = store.getAll();
+          req.onsuccess = () => {
+            const map = {};
+            (req.result || []).forEach(item => {
+              if (item && item.id && item.data) map[item.id] = item.data;
+            });
+            resolve(map);
+          };
+          req.onerror = () => resolve({});
+        });
+      } catch (e) {
+        return {};
+      }
+    }
+
+    async function savePhotoToCloud(productId, dataUrl) {
+      if (!isCloudActive || !db || !auth.currentUser) return;
+      try {
+        const photoDoc = doc(db, 'artifacts', appId, 'public', 'data', 'catalog_photos', String(productId));
+        await setDoc(photoDoc, {
+          id: String(productId),
+          data: dataUrl,
+          updatedAt: Date.now()
+        });
+      } catch (e) {
+        console.warn("Cloud save note:", e);
+      }
+    }
+
+    async function setupCloudSync() {
+      const statusText = document.getElementById('statusText');
+      const statusIndicator = document.getElementById('statusIndicator');
+
+      if (typeof __firebase_config === 'undefined') {
+        if (statusText) statusText.innerText = "Local Persistence Active (Cloud Unconfigured)";
+        return;
+      }
+
+      try {
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+
+        currentUser = auth.currentUser;
+        if (!currentUser) return;
+
+        isCloudActive = true;
+        if (statusText) statusText.innerText = "Cloud Sync & Multi-Device Backup Active";
+        if (statusIndicator) statusIndicator.className = "w-3 h-3 rounded-full bg-emerald-400 animate-pulse flex-shrink-0";
+
+        // Listen for all synced photos in real time
+        const photosCol = collection(db, 'artifacts', appId, 'public', 'data', 'catalog_photos');
+        onSnapshot(photosCol, (snapshot) => {
+          let updatedCount = 0;
+          snapshot.forEach(docSnap => {
+            const item = docSnap.data();
+            if (item && item.id && item.data) {
+              photoMap[item.id] = item.data;
+              savePhotoToIDB(item.id, item.data);
+              updatedCount++;
+            }
+          });
+          if (updatedCount > 0) {
+            renderCatalog();
+          }
+        }, (error) => {
+          console.warn("Cloud listener note:", error);
+        });
+      } catch (err) {
+        console.warn("Cloud init note:", err);
+      }
+    }
+
+    // Initialize State & Storage
+    async function initCatalog() {
+      if (window.__BAKED_PHOTOS__) {
+        photoMap = { ...window.__BAKED_PHOTOS__ };
+      }
+
+      try {
+        const localData = localStorage.getItem('sams_plus_photos_v5');
+        if (localData) {
+          const parsed = JSON.parse(localData);
+          photoMap = { ...photoMap, ...parsed };
+        }
+      } catch (e) {
+        console.warn("LocalStorage read warning:", e);
+      }
+
+      try {
+        const idbPhotos = await loadAllPhotosFromIDB();
+        if (Object.keys(idbPhotos).length > 0) {
+          photoMap = { ...photoMap, ...idbPhotos };
+        }
+      } catch (err) {
+        console.warn("IDB fetch note:", err);
+      }
+
+      renderCatalog();
+      await setupCloudSync();
+    }
+
+    async function persistState(updatedProductId = null) {
+      try {
+        localStorage.setItem('sams_plus_photos_v5', JSON.stringify(photoMap));
+      } catch (e) {
+        console.warn("LocalStorage quota note:", e);
+      }
+
+      if (updatedProductId && photoMap[updatedProductId]) {
+        await savePhotoToIDB(updatedProductId, photoMap[updatedProductId]);
+        await savePhotoToCloud(updatedProductId, photoMap[updatedProductId]);
+      } else {
+        for (const [pId, pData] of Object.entries(photoMap)) {
+          await savePhotoToIDB(pId, pData);
+          await savePhotoToCloud(pId, pData);
+        }
+      }
+
+      renderCatalog();
+    }
+
+    function optimizeImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 640;
+            const MAX_HEIGHT = 640;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height = Math.round(height * (MAX_WIDTH / width));
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width = Math.round(width * (MAX_HEIGHT / height));
+                height = MAX_HEIGHT;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.74));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    window.handleHeaderPhotoSync = async function(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      pendingPhotosQueue = [];
+      showToast(`Processing ${files.length} photos...`);
+
+      for (let file of files) {
+        const fileName = file.name.toLowerCase();
+        const optimizedData = await optimizeImage(file);
+        
+        let matched = products.find(p => fileName.includes(p.id));
+        
+        if (!matched) {
+          if (fileName.includes('10.30.33') || fileName.includes('satin')) {
+            matched = products.find(p => p.id === '1001056208');
+          } else if (fileName.includes('10.39.45') || fileName.includes('wine')) {
+            matched = products.find(p => p.id === '1001056231');
+          } else if (fileName.includes('10.48.05') || fileName.includes('wengi')) {
+            matched = products.find(p => p.id === '1001056238');
+          } else if (fileName.includes('10.56.49') || fileName.includes('marigold')) {
+            matched = products.find(p => p.id === '1001056265');
+          }
+        }
+
+        if (!matched) {
+          const cleanName = fileName.replace(/[^a-z0-9]/g, '');
+          matched = products.find(p => {
+            const cleanCode = p.code.toLowerCase().replace(/[^a-z0-9]/g, '');
+            return cleanName.includes(cleanCode) || cleanCode.includes(cleanName);
+          });
+        }
+
+        if (matched) {
+          photoMap[matched.id] = optimizedData;
+          await persistState(matched.id);
+        } else {
+          pendingPhotosQueue.push({
+            data: optimizedData,
+            fileName: file.name
+          });
+        }
+      }
+
+      showToast("Sync complete! Photos backed up permanently.");
+
+      if (pendingPhotosQueue.length > 0) {
+        showNextPendingPhoto();
+      }
+    };
+
+    function populateMatcherDropdown() {
+      const select = document.getElementById('matcherProductSelect');
+      if (!select) return;
+      select.innerHTML = products.map(p => `
+        <option value="${p.id}">${p.code} • ${p.finish} (${p.series})</option>
+      `).join('');
+    }
+
+    function showNextPendingPhoto() {
+      if (pendingPhotosQueue.length === 0) {
+        window.closeMatcherModal();
+        return;
+      }
+      populateMatcherDropdown();
+      const current = pendingPhotosQueue[0];
+      const imgPreview = document.getElementById('matcherImagePreview');
+      const progressText = document.getElementById('matcherProgressText');
+      const modal = document.getElementById('photoMatcherModal');
+
+      if (imgPreview) imgPreview.src = current.data;
+      if (progressText) {
+        progressText.innerText = `Assign photo (Remaining: ${pendingPhotosQueue.length}) • ${current.fileName}`;
+      }
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    window.confirmPhotoMatch = async function() {
+      if (pendingPhotosQueue.length === 0) return;
+      const select = document.getElementById('matcherProductSelect');
+      const selectedId = select.value;
+      const current = pendingPhotosQueue.shift();
+
+      if (selectedId && current) {
+        photoMap[selectedId] = current.data;
+        await persistState(selectedId);
+      }
+
+      showNextPendingPhoto();
+    };
+
+    window.skipCurrentPhoto = function() {
+      pendingPhotosQueue.shift();
+      showNextPendingPhoto();
+    };
+
+    window.closeMatcherModal = function() {
+      const modal = document.getElementById('photoMatcherModal');
+      if (modal) modal.classList.add('hidden');
+      pendingPhotosQueue = [];
+    };
+
+    window.handleCardPhotoUpload = async function(event, productId) {
+      const file = event.target.files[0];
+      if (!file) return;
+      showToast("Uploading and syncing photo...");
+      const optimized = await optimizeImage(file);
+      photoMap[productId] = optimized;
+      await persistState(productId);
+      showToast("Photo saved & synced permanently!");
+    };
+
+    window.renderCatalog = function() {
+      const grid = document.getElementById('productGrid');
+      if (!grid) return;
+      const searchEl = document.getElementById('searchInput');
+      const query = (searchEl ? searchEl.value : '').toLowerCase();
+      
+      const filtered = products.filter(p => {
+        const matchesSeries = currentSeries === 'ALL' || p.series === currentSeries;
+        const matchesQuery = p.code.toLowerCase().includes(query) || p.finish.toLowerCase().includes(query) || p.id.includes(query);
+        return matchesSeries && matchesQuery;
+      });
+
+      let html = '';
+      let syncedCount = Object.keys(photoMap).length;
+
+      const totalModelsEl = document.getElementById('metricTotalModels');
+      if (totalModelsEl) totalModelsEl.innerText = products.length;
+
+      let totalStock = products.reduce((acc, p) => acc + p.items.reduce((sum, item) => sum + item.qty, 0), 0);
+      const totalStockEl = document.getElementById('metricTotalStock');
+      if (totalStockEl) totalStockEl.innerText = totalStock.toLocaleString();
+
+      const syncedEl = document.getElementById('metricPhotosSynced');
+      if (syncedEl) syncedEl.innerText = `${syncedCount} / ${products.length}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 bg-slate-800/30 rounded-3xl border border-slate-800">No hardware models found matching your search.</div>`;
+        return;
+      }
+
+      filtered.forEach(p => {
+        const photo = photoMap[p.id];
+        const hasPhoto = !!photo;
+        const totalQty = p.items.reduce((s, i) => s + i.qty, 0);
+
+        html += `
+          <div class="bg-slate-800/70 border border-slate-700/80 rounded-3xl p-4 sm:p-5 shadow-xl flex flex-col backdrop-blur-sm transition hover:border-slate-600">
+            <div class="relative w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-700/60 mb-3.5 flex items-center justify-center group min-h-[180px] sm:min-h-[210px]">
+              ${hasPhoto ? 
+                `<img src="${photo}" alt="${p.code}" class="w-full h-auto object-contain max-h-64 rounded-xl">` :
+                `<div class="w-full h-48 flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-950 p-4">
+                   <svg class="w-10 h-10 text-amber-500/40 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                   <p class="text-xs font-mono text-slate-400 font-bold">${p.id}.jpg</p>
+                   <p class="text-[10px] text-slate-500 mt-0.5">${p.series === 'Knobs' ? 'Cabinet / Drawer Knob Profile' : 'Architectural Profile Pull'}</p>
+                 </div>`
+              }
+              
+              <div class="absolute top-2.5 left-2.5 flex items-center space-x-1.5 pointer-events-none">
+                <span class="px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wider bg-slate-900/90 text-amber-400 border border-slate-700 shadow-md">${p.series}</span>
+                ${hasPhoto ? `<span class="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-emerald-500/90 text-slate-950 shadow-md">Photo Synced</span>` : ``}
+              </div>
+
+              <label class="absolute bottom-2.5 right-2.5 sm:inset-0 sm:bottom-auto sm:right-auto sm:bg-slate-950/60 sm:opacity-0 sm:group-hover:opacity-100 transition flex items-center justify-center cursor-pointer">
+                <span class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-extrabold shadow-lg flex items-center space-x-1.5 transition">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                  <span>${hasPhoto ? 'Change Photo' : 'Add Photo'}</span>
+                </span>
+                <input type="file" accept="image/*" class="hidden" onchange="handleCardPhotoUpload(event, '${p.id}')">
+              </label>
+            </div>
+
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <h3 class="font-display text-sm sm:text-base font-bold text-white tracking-wide">${p.code}</h3>
+                <p class="text-xs text-slate-400 font-medium line-clamp-1 mt-0.5">${p.finish}</p>
+              </div>
+              <div class="text-right flex-shrink-0 ml-2">
+                <span class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">${totalQty} Pcs Stock</span>
+              </div>
+            </div>
+
+            <div class="bg-slate-900/80 rounded-xl border border-slate-700/60 overflow-hidden mt-1">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-slate-900 text-slate-400 font-semibold border-b border-slate-800">
+                    <th class="py-1.5 px-3">Size</th>
+                    <th class="py-1.5 px-3 text-center">Available Qty</th>
+                    <th class="py-1.5 px-3 text-right">MRP (₹)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60 text-slate-200">
+                  ${p.items.map(item => `
+                    <tr class="hover:bg-slate-800/40 transition">
+                      <td class="py-1.5 px-3 font-bold text-white">${item.size}</td>
+                      <td class="py-1.5 px-3 text-center">
+                        <span class="px-2 py-0.5 bg-slate-800 text-slate-300 rounded-md font-medium">${item.qty} PC</span>
+                      </td>
+                      <td class="py-1.5 px-3 text-right font-extrabold text-amber-400">
+                        ${typeof item.mrp === 'number' && item.mrp > 0 ? '₹' + item.mrp.toLocaleString() : (item.mrp === '-' || !item.mrp || item.mrp === '' ? '-' : item.mrp)}
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+    };
+
+    window.filterCatalog = function() { renderCatalog(); };
+
+    window.filterBySeries = function(series) {
+      currentSeries = series;
+      document.querySelectorAll('.series-pill').forEach(btn => {
+        if (btn.innerText.includes(series) || (series === 'ALL' && btn.innerText.includes('All'))) {
+          btn.className = "series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition whitespace-nowrap shadow-sm";
+        } else {
+          btn.className = "series-pill px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition whitespace-nowrap border border-slate-700";
+        }
+      });
+      renderCatalog();
+    };
+
+    window.downloadPDFCatalog = function() {
+      const btnText = document.getElementById('pdfBtnText');
+      if (btnText) btnText.innerText = "Formatting 4-Per-Page PDF...";
+
+      const query = (document.getElementById('searchInput').value || '').toLowerCase();
+      const filtered = products.filter(p => {
+        const matchesSeries = currentSeries === 'ALL' || p.series === currentSeries;
+        const matchesQuery = p.code.toLowerCase().includes(query) || p.finish.toLowerCase().includes(query) || p.id.includes(query);
+        return matchesSeries && matchesQuery;
+      });
+
+      const pdfWrapper = document.createElement('div');
+      pdfWrapper.style.width = '210mm';
+      pdfWrapper.style.backgroundColor = '#ffffff';
+      pdfWrapper.style.color = '#0f172a';
+      pdfWrapper.style.padding = '8mm 10mm';
+      pdfWrapper.style.fontFamily = '"Plus Jakarta Sans", sans-serif';
+
+      let chunks = [];
+      for (let i = 0; i < filtered.length; i += 4) {
+        chunks.push(filtered.slice(i, i + 4));
+      }
+
+      chunks.forEach((chunk, pageIndex) => {
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'pdf-page';
+        pageDiv.style.height = '281mm';
+        pageDiv.style.boxSizing = 'border-box';
+        pageDiv.style.display = 'flex';
+        pageDiv.style.flexDirection = 'column';
+        pageDiv.style.justifyContent = 'space-between';
+        if (pageIndex > 0) {
+          pageDiv.style.pageBreakBefore = 'always';
+        }
+
+        const header = document.createElement('div');
+        header.style.display = 'flex';
+        header.style.justifyContent = 'space-between';
+        header.style.alignItems = 'center';
+        header.style.borderBottom = '2px solid #e2e8f0';
+        header.style.paddingBottom = '6px';
+        header.style.marginBottom = '8px';
+        header.innerHTML = `
+          <div>
+            <h2 style="font-family:Cinzel,serif; font-size: 17px; font-weight:800; color:#0f172a; margin:0;">SAMS PLUS HARDWARE CATALOG</h2>
+            <p style="font-size: 9.5px; color:#64748b; margin:0; text-transform:uppercase; letter-spacing:1px;">Master Price List & Inventory Register</p>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size: 11px; font-weight:bold; color:#d97706;">Page ${pageIndex + 1} of ${chunks.length}</span>
+          </div>
+        `;
+        pageDiv.appendChild(header);
+
+        const grid = document.createElement('div');
+        grid.style.display = 'grid';
+        grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        grid.style.gridTemplateRows = 'repeat(2, 1fr)';
+        grid.style.gap = '10mm';
+        grid.style.flex = '1';
+
+        chunk.forEach(p => {
+          const photo = photoMap[p.id];
+          const hasPhoto = !!photo;
+          const totalQty = p.items.reduce((s, i) => s + i.qty, 0);
+
+          const card = document.createElement('div');
+          card.style.border = '1px solid #cbd5e1';
+          card.style.borderRadius = '12px';
+          card.style.padding = '10px';
+          card.style.backgroundColor = '#f8fafc';
+          card.style.display = 'flex';
+          card.style.flexDirection = 'column';
+          card.style.justifyContent = 'space-between';
+          card.style.boxSizing = 'border-box';
+          card.style.height = '100%';
+
+          card.innerHTML = `
+            <div style="display:flex; flex-direction:column; flex:1;">
+              <div style="width:100%; height:195px; border-radius:8px; overflow:hidden; background:#0f172a; margin-bottom:8px; display:flex; align-items:center; justify-content:center; border:1px solid #cbd5e1;">
+                ${hasPhoto ? 
+                  `<img src="${photo}" style="width:100%; height:100%; object-fit:contain; display:block;">` :
+                  `<div style="text-align:center; color:#94a3b8;"><p style="font-size:12px; font-weight:bold; margin:0;">${p.id}.jpg</p><p style="font-size:10px; margin:0;">${p.series === 'Knobs' ? 'Cabinet / Drawer Knob' : 'Architectural Profile'}</p></div>`
+                }
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+                <div>
+                  <h4 style="font-family:Cinzel,serif; font-size:13px; font-weight:800; color:#0f172a; margin:0; line-height:1.2;">${p.code}</h4>
+                  <p style="font-size:10px; color:#475569; margin:2px 0 0 0; font-weight:500;">${p.finish}</p>
+                </div>
+                <span style="font-size:10px; font-weight:bold; background:#fef3c7; color:#d97706; padding:3px 8px; border-radius:6px; white-space:nowrap; border:1px solid #fde68a;">${totalQty} Pcs</span>
+              </div>
+
+              <table style="width:100%; border-collapse:collapse; font-size:10px; margin-top:2px;">
+                <thead>
+                  <tr style="background:#e2e8f0; color:#1e293b;">
+                    <th style="padding:4px 6px; text-align:left; font-weight:700;">Size</th>
+                    <th style="padding:4px 6px; text-align:center; font-weight:700;">Qty</th>
+                    <th style="padding:4px 6px; text-align:right; font-weight:700;">MRP (₹)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${p.items.map(item => `
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                      <td style="padding:4px 6px; font-weight:700; color:#0f172a;">${item.size}</td>
+                      <td style="padding:4px 6px; text-align:center; color:#334155; font-weight:600;">${item.qty} PC</td>
+                      <td style="padding:4px 6px; text-align:right; font-weight:800; color:#d97706;">
+                        ${typeof item.mrp === 'number' && item.mrp > 0 ? '₹' + item.mrp.toLocaleString() : (item.mrp === '-' || !item.mrp || item.mrp === '' ? '-' : item.mrp)}
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+
+            <div style="font-size:9px; color:#64748b; border-top:1px solid #e2e8f0; padding-top:4px; margin-top:6px; display:flex; justify-content:space-between; font-weight:500;">
+              <span>Series: <strong style="color:#0f172a;">${p.series}</strong></span>
+              <span>Sams Plus Hardware</span>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        pageDiv.appendChild(grid);
+
+        const footer = document.createElement('div');
+        footer.style.borderTop = '1px solid #e2e8f0';
+        footer.style.paddingTop = '4px';
+        footer.style.marginTop = '6px';
+        footer.style.textAlign = 'center';
+        footer.style.fontSize = '9px';
+        footer.style.color = '#64748b';
+        footer.innerHTML = `Sams Plus Hardware Catalog • Master Price List & Stock Register`;
+        pageDiv.appendChild(footer);
+
+        pdfWrapper.appendChild(pageDiv);
+      });
+
+      document.body.appendChild(pdfWrapper);
+
+      const opt = {
+        margin:       0,
+        filename:     'SamsPlus_Catalog_4Per_Page.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().from(pdfWrapper).set(opt).save().then(() => {
+        document.body.removeChild(pdfWrapper);
+        if (btnText) btnText.innerText = "Download PDF (4/Page)";
+      }).catch(err => {
+        console.error("PDF generation note:", err);
+        document.body.removeChild(pdfWrapper);
+        window.print();
+        if (btnText) btnText.innerText = "Download PDF (4/Page)";
+      });
+    };
+
+    window.exportJSONBackup = function() {
+      const backupData = {
+        version: "6.0",
+        timestamp: new Date().toISOString(),
+        photoMap: photoMap,
+        totalProducts: products.length
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `SamsPlus_Catalog_Backup_${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("Backup exported successfully (.json)");
+    };
+
+    window.importJSONBackup = async function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.photoMap) {
+            photoMap = { ...photoMap, ...data.photoMap };
+          } else if (typeof data === 'object') {
+            photoMap = { ...photoMap, ...data };
+          }
+          await persistState();
+          showToast("Backup restored & synced to cloud!");
+        } catch (err) {
+          showToast("Invalid backup file format.");
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    window.bakeAndExportHTML = function() {
+      let htmlContent = document.documentElement.outerHTML;
+      const stateScript = `<script>
+        window.__BAKED_PHOTOS__ = ${JSON.stringify(photoMap)};
+      <\/script>`;
+      
+      htmlContent = htmlContent.replace('</head>', stateScript + '\n</head>');
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'SamsPlus_Catalog_With_Photos.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("Standalone offline HTML catalog downloaded!");
+    };
+
+    window.addEventListener('DOMContentLoaded', initCatalog);
+  </script>
+</body>
+</html>
